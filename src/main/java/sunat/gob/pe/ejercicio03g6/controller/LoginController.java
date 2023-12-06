@@ -1,5 +1,6 @@
 package sunat.gob.pe.ejercicio03g6.controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -11,6 +12,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Window;
+import sunat.gob.pe.ejercicio03g6.App;
 import sunat.gob.pe.ejercicio03g6.model.dao.ProductoDao;
 import sunat.gob.pe.ejercicio03g6.model.dao.UsuarioDao;
 import sunat.gob.pe.ejercicio03g6.model.dao.impl.ProductoDaoImpl;
@@ -41,67 +44,55 @@ public class LoginController implements Initializable{
 			System.out.println(productoModel.getId() + " " + productoModel.getNombre());
 		}
 		
-		/*btnLogin.setOnAction(new EventHandler<ActionEvent>() {
-			
-			@Override
-			public void handle(ActionEvent event) {
-				validarDatos();
-				
-			}
-		});*/
-		//-> arrow
 		btnLogin.setOnAction(p -> validarDatos());
-		//btnLogin.setOnAction(this::validarDatos);
 		
 	}
 	
 	private void validarDatos() {
 		if(txtUsuario.getText().equals("")) {
-			
-			Alert alerta = new Alert(AlertType.ERROR);
-			alerta.setContentText("Ingrese usuario válido");
-			alerta.show();
+			mostrarAlerta(AlertType.ERROR, "Ingrese usuario válido");
 			return;
 		}
 		
-		if(txtPassword.getText().equals("")) {			
-			Alert alerta = new Alert(AlertType.ERROR);
-			alerta.setContentText("Ingrese password válido");
-			alerta.show();
+		if(txtPassword.getText().equals("")) {	
+			mostrarAlerta(AlertType.ERROR, "Ingrese password válido");
 			return;
 		}
 		
 		UsuarioDao usuarioDao = new UsuarioDao();
 		List<UsuarioModel> listaUsuarios = usuarioDao.listarUsuarios();
 		
-		/*while() {
-			
-		}
-		
-		do {
-			
-		}while(1 < 2);
-		*/
-		
-		/*for(int i = 0; i < 10; i++) {
-			//codigo
-		}*/
-		
 		for(UsuarioModel model :listaUsuarios) {
 			if(txtUsuario.getText().equals(model.getUsuario()) && 
 					txtPassword.getText().equals(model.getPassword())) {
 				
-				Alert alerta = new Alert(AlertType.INFORMATION);
-				alerta.setContentText("Credenciales válidas");
-				alerta.show();
+				mostrarAlerta(AlertType.INFORMATION, "Credenciales válidas");
+				
+				try {
+					App.setRoot("dashboard");
+					
+				} catch (IOException e) {
+					
+					e.printStackTrace();
+				}
+				cambiarTamanioPantalla(730, 450);
 				return;
 			}
 		}
+		mostrarAlerta(AlertType.ERROR, "Credenciales inválidas");		
 		
-		Alert alerta = new Alert(AlertType.ERROR);
-		alerta.setContentText("Credenciales inválidas");
+	}
+	
+	private void mostrarAlerta(AlertType tipoAlerta, String mensaje) {
+		Alert alerta = new Alert(tipoAlerta);
+		alerta.setContentText(mensaje);
 		alerta.show();
-		
+	}
+	
+	private void cambiarTamanioPantalla(int largo, int ancho) {
+		Window window = App.scene.getWindow();
+		window.setHeight(ancho);
+		window.setWidth(largo);
 	}
 	
 	
