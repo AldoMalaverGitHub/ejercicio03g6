@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -67,14 +68,7 @@ public class LoginController implements Initializable{
 					txtPassword.getText().equals(model.getPassword())) {
 				
 				mostrarAlerta(AlertType.INFORMATION, "Credenciales válidas");
-				
-				try {
-					App.setRoot("dashboard");
-					
-				} catch (IOException e) {
-					
-					e.printStackTrace();
-				}
+				cargarDashboard();				
 				cambiarTamanioPantalla(730, 450);
 				return;
 			}
@@ -87,6 +81,18 @@ public class LoginController implements Initializable{
 		Alert alerta = new Alert(tipoAlerta);
 		alerta.setContentText(mensaje);
 		alerta.show();
+	}
+	
+	private void cargarDashboard() {
+		FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("dashboard.fxml"));
+		try {
+			App.scene.setRoot(fxmlLoader.load());
+		}catch(IOException ie) {
+			
+		}
+		DashboardController controller = fxmlLoader.<DashboardController>getController();
+		controller.actualizarUsuario(txtUsuario.getText());
+		
 	}
 	
 	private void cambiarTamanioPantalla(int largo, int ancho) {

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.Pane?>
 
-
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sunat.gob.pe.ejercicio03g6.controller.DashboardController">
-	<fx:include source="menu.fxml"/>
+	<fx:include source="menu.fxml" />
+   <Label layoutX="461.0" layoutY="14.0" text="Usted ingreso: " />
+   <Label fx:id="lblUsuario" layoutX="548.0" layoutY="14.0" text="Label" />
 </Pane>
