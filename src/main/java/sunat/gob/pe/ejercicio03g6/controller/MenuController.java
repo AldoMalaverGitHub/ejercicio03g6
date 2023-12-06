@@ -43,7 +43,7 @@ public class MenuController implements Initializable{
 	
 	private void irProductos() {
 		try {
-			App.setRoot("producto");
+			App.setRoot("productos");
 		} catch (IOException e) {			
 			e.printStackTrace();
 		}
